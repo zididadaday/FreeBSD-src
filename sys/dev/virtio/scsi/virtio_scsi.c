@@ -327,8 +327,6 @@ vtscsi_attach(device_t dev)
 
 	vtscsi_check_sizes(sc);
 
-	vtscsi_check_sizes(sc);
-
 	error = vtscsi_init_event_vq(sc);
 	if (error) {
 		device_printf(dev, "cannot populate the eventvq\n");
@@ -539,25 +537,6 @@ vtscsi_check_sizes(struct vtscsi_softc *sc)
 	}
 }
 
-static void
-vtscsi_check_sizes(struct vtscsi_softc *sc)
-{
-       int rqsize;
-
-       if ((sc->vtscsi_flags & VTSCSI_FLAG_INDIRECT) == 0) {
-               /*
-                * Ensure the assertions in virtqueue_enqueue(),
-                * even if the hypervisor reports a bad seg_max.
-                */
-               rqsize = virtqueue_size(sc->vtscsi_request_vq);
-               if (sc->vtscsi_max_nsegs > rqsize) {
-                       device_printf(sc->vtscsi_dev,
-                           "clamping seg_max (%d %d)\n", sc->vtscsi_max_nsegs,
-                           rqsize);
-                       sc->vtscsi_max_nsegs = rqsize;
-               }
-       }
-}
 
 static void
 vtscsi_write_device_config(struct vtscsi_softc *sc)
