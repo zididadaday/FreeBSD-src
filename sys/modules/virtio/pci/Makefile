@@ -27,6 +27,10 @@
 
 KMOD=	virtio_pci
 SRCS=	virtio_pci.c
+# q35
+SRCS+=  virtio_pci_legacy.c virtio_pci_modern.c
+SRCS+=  virtio_pci_if.c virtio_pci_if.h
+# end
 SRCS+=	virtio_bus_if.h virtio_if.h 
 SRCS+=	bus_if.h device_if.h pci_if.h
 
