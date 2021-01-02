@@ -91,7 +91,7 @@ vtnet_netmap_free_bufs(struct vtnet_softc *sc)
 				nmb++;
 		}
 	}
-	nmprin_f("freed %d mbufs, %d netmap bufs on %d queues",
+	nm_prinf("freed %d mbufs, %d netmap bufs on %d queues",
 		n - nmb, nmb, i);
 }
 
