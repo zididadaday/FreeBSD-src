@@ -3411,7 +3411,7 @@ vtnet_init(void *xsc)
 
 #ifdef DEV_NETMAP
 	if (!NA(sc->vtnet_ifp)) {
-		D("try to attach again");
+		nm_prinf("try to attach again");
 		vtnet_netmap_attach(sc);
 	}
 #endif
