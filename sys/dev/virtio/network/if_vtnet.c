@@ -83,7 +83,6 @@ __FBSDID("$FreeBSD$");
 #include <dev/virtio/network/virtio_net.h>
 #include <dev/virtio/network/if_vtnetvar.h>
 #include "virtio_if.h"
-#include <dev/netmap/if_vtnet_netmap.h>
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
@@ -3219,11 +3218,12 @@ vtnet_init_rx_queues(struct vtnet_softc *sc)
 	} else
 		sc->vtnet_rx_nmbufs = 1;
 
-#ifdef DEV_NETMAP
-	if (vtnet_netmap_init_rx_buffers(sc))
-		return (0);
-#endif
-
+/*
+* #ifdef DEV_NETMAP
+*	if (vtnet_netmap_init_rx_buffers(sc))
+*		return (0);
+* #endif
+*/
 	for (i = 0; i < sc->vtnet_act_vq_pairs; i++) {
 		rxq = &sc->vtnet_rxqs[i];
 
