@@ -91,7 +91,7 @@ vtnet_netmap_free_bufs(struct vtnet_softc *sc)
 				nmb++;
 		}
 	}
-	D("freed %d mbufs, %d netmap bufs on %d queues",
+	nmprin_f("freed %d mbufs, %d netmap bufs on %d queues",
 		n - nmb, nmb, i);
 }
 
@@ -495,7 +495,7 @@ vtnet_netmap_rxsync(struct netmap_kring *kring, int flags)
 		kring->nr_hwtail = nm_i;
 		kring->nr_kflags &= ~NKR_PENDINTR;
 	}
-	ND("[B] h %d c %d hwcur %d hwtail %d",
+	nm_prdis("[B] h %d c %d hwcur %d hwtail %d",
 	ring->head, ring->cur, kring->nr_hwcur,
 			  kring->nr_hwtail);
 
@@ -514,7 +514,7 @@ vtnet_netmap_rxsync(struct netmap_kring *kring, int flags)
 			vtnet_rxq_enable_intr(rxq);
 		}
 	}
-	ND("[C] h %d c %d t %d hwcur %d hwtail %d",
+	nm_prdis("[C] h %d c %d t %d hwcur %d hwtail %d",
 	ring->head, ring->cur, ring->tail,
 	kring->nr_hwcur, kring->nr_hwtail);
 
@@ -563,7 +563,7 @@ vtnet_netmap_init_rx_buffers(struct vtnet_softc *sc)
 
 		slot = netmap_reset(na, NR_RX, r, 0);
 		if (!slot) {
-			D("strange, null netmap ring %d", r);
+			nm_prinf("strange, null netmap ring %d", r);
 			return 0;
 		}
 		/* Add up to na>-num_rx_desc-1 buffers to this RX virtqueue.
@@ -659,7 +659,7 @@ vtnet_netmap_attach(struct vtnet_softc *sc)
 	na.nm_intr = vtnet_netmap_intr;
 	na.num_tx_rings = na.num_rx_rings = sc->vtnet_max_vq_pairs;
 	na.nm_config = vtnet_netmap_config;
-	D("max rings %d", sc->vtnet_max_vq_pairs);
+	nm_prinf("max rings %d", sc->vtnet_max_vq_pairs);
 
 	nm_prinf("vtnet attached txq=%d, txd=%d rxq=%d, rxd=%d\n",
 			na.num_tx_rings, na.num_tx_desc,
