@@ -83,6 +83,7 @@ __FBSDID("$FreeBSD$");
 #include <dev/virtio/network/virtio_net.h>
 #include <dev/virtio/network/if_vtnetvar.h>
 #include "virtio_if.h"
+#include <dev/netmap/if_vtnet_netmap.h>
 
 #include "opt_inet.h"
 #include "opt_inet6.h"
